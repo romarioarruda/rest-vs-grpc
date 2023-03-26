@@ -8,13 +8,26 @@ const NotesDefinition = grpc.loadPackageDefinition(protoObject)
 const host = 'localhost:50051'
 const client = new NotesDefinition.NoteService(host, grpc.credentials.createInsecure())
 
-client.list({}, (err, notes) => {
-  if (err) throw err
-  console.log(notes)
-})
+const list = () => {
+  client.list({}, (err, notes) => {
+    if (err) return console.error('Error: ', err.details)
+  
+    console.log('Notes: ', notes)
+  })
+}
 
-client.find({ id: 2 }, (err, note) => {
-  if (err) throw err
-  if (!note.id) return console.log('Note not found')
-  return console.log(note)
-})
+const listStream = () => {
+  client.listStream({}).on('data', (note) => console.log('Note:', note))
+}
+
+const find = (id) => {
+  client.find({ id }, (err, note) => {
+    if (err) return console.error('Error: ', err.details)
+  
+    console.log('Note: ', note)
+  })
+}
+
+// list()
+listStream()
+// find(3)
