@@ -1,7 +1,7 @@
 const path = require('path')
 const grpc = require('@grpc/grpc-js')
 const protoLoader = require('@grpc/proto-loader')
-const notes = require('../notes.json')
+const notes = require('./notes.json')
 
 const protoObject = protoLoader.loadSync(path.resolve(__dirname, 'notes.proto'))
 const NotesDefinition = grpc.loadPackageDefinition(protoObject)
