@@ -17,7 +17,10 @@ const list = () => {
 }
 
 const listStream = () => {
-  client.listStream({}).on('data', (note) => console.log('Note:', note))
+  const noteStream = client.listStream({})
+
+  noteStream.on('data', (note) => console.log('Note:', note))
+  noteStream.on('end', () => console.log('Note finished!'))
 }
 
 const find = (id) => {
