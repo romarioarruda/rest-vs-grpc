@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+service NoteService {
+  rpc List (Void) returns (NoteList);
+  rpc Find (NoteId) returns (Note);
+  rpc ListStream (Void) returns (stream Note);
+}
+
+message Void {}
+
+message NoteId {
+  string id = 1;
+}
+
+message Note {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+}
+
+message NoteList {
+  repeated Note notes = 1;
+}
