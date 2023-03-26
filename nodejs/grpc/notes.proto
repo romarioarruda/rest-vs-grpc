@@ -4,6 +4,7 @@ service NoteService {
   rpc List (Void) returns (NoteList);
   rpc Find (NoteId) returns (Note);
   rpc ListStream (Void) returns (stream Note);
+  rpc Duplex (stream NoteId) returns (stream Note);
 }
 
 message Void {}

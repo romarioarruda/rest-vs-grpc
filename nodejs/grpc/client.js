@@ -31,6 +31,16 @@ const find = (id) => {
   })
 }
 
+const duplex = () => {
+  const duplex = client.duplex()
+  duplex.on('data', (data) => {
+    console.log('Receiving data from server: ', data)
+  })
+  duplex.write({ id: 1 })
+  duplex.end()
+}
+
 // list()
-listStream()
+// listStream()
 // find(3)
+duplex()

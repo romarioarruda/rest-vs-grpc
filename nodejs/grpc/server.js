@@ -24,10 +24,20 @@ function Find ({ request }, callback) {
     return callback({ message: `Note ${request.id} not found` })
 }
 
+function Duplex (call) {
+    call.on('data', (data) => {
+        console.log('Receiving data from client: ', data)
+        const note = notes.find((note) => note.id === data.id)
+        
+        call.write(note)
+        call.end()
+    })
+}
+
 const server = new grpc.Server()
 server.addService(
     NotesDefinition.NoteService.service,
-    { List, ListStream, Find }
+    { List, ListStream, Find, Duplex }
 )
 
 const host = 'localhost:50051'
